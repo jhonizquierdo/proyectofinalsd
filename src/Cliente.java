@@ -296,42 +296,42 @@ public class Cliente extends javax.swing.JFrame {
         }
 
         Cliente objCliente = new Cliente();
-
-        ComboBoxRues cb =  (ComboBoxRues) cmbEmpresa.getSelectedItem();
-
-        Empresas objEmpresas = new Empresas();
-
-        String nombre = txtNombre.getText();
-        String apellido = txtApellido.getText();
-        int empresa_ruc = cb.getId();
-        int id_cliente = Integer.parseInt(txtId.getText());
-        JOptionPane.showMessageDialog(null, empresa_ruc);
-
-        if (id_cliente == 0) {
-            boolean resultado = objCliente.insertarCliente(nombre, apellido, empresa_ruc );
-            if (resultado == true) {
-                JOptionPane.showMessageDialog(null, "Se inserto un nuevo registro.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al insertar.");
-            }
-
-        } else {
-            boolean resultado = objCliente.actualizarCliente(id_cliente, nombre, apellido, empresa_ruc);
-            if (resultado == true) {
-                JOptionPane.showMessageDialog(null, "Se actualizó el registro.");
-                cargarTablaCli();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar.");
-                //Empresa obj = new Empresa();
-                //obj.setVisible(true);
-            }
-            // *** Limpio los Campos ***
-            txtId.setText("");
-            txtNombre.setText("");
-            txtApellido.setText("");
-            cmbEmpresa.setSelectedIndex(0);
-            txtNombre.requestFocus();
-        }
+//
+//        ComboBoxRues cb =  (ComboBoxRues) cmbEmpresa.getSelectedItem();
+//
+//        Empresas objEmpresas = new Empresas();
+//
+//        String nombre = txtNombre.getText();
+//        String apellido = txtApellido.getText();
+//        int empresa_ruc = cb.getId();
+//        int id_cliente = Integer.parseInt(txtId.getText());
+//        JOptionPane.showMessageDialog(null, empresa_ruc);
+//
+//        if (id_cliente == 0) {
+//            boolean resultado = objCliente.insertarCliente(nombre, apellido, empresa_ruc );
+//            if (resultado == true) {
+//                JOptionPane.showMessageDialog(null, "Se inserto un nuevo registro.");
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Error al insertar.");
+//            }
+//
+//        } else {
+//            boolean resultado = objCliente.actualizarCliente(id_cliente, nombre, apellido, empresa_ruc);
+//            if (resultado == true) {
+//                JOptionPane.showMessageDialog(null, "Se actualizó el registro.");
+//                cargarTablaCli();
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Error al actualizar.");
+//                //Empresa obj = new Empresa();
+//                //obj.setVisible(true);
+//            }
+//            // *** Limpio los Campos ***
+//            txtId.setText("");
+//            txtNombre.setText("");
+//            txtApellido.setText("");
+//            cmbEmpresa.setSelectedIndex(0);
+//            txtNombre.requestFocus();
+//        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
