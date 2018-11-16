@@ -1,0 +1,12 @@
+module Facturas{
+    interface Factura{
+    boolean insertarFactura(in long id_factura, in long id_cliente, in  long id_producto,in  long id_vendedor,in wstring fecha );
+    boolean actualizarFactura(in long id_cliente, in wstring Nombre, in  wstring Apellido , in  long Edad);
+    boolean eliminarFactura(in long id_factura);
+    wstring consultarFactura(in long id_factura);
+    
+    oneway void shoutdown();
+    };
+    
+};
+

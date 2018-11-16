@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista;
+
 
 /**
  *
  * @author Braulio
  */
-public class Cliente1 extends javax.swing.JFrame {
+public class Cliente extends javax.swing.JFrame {
 
     /**
      * Creates new form JFCrud
      */
-    public Cliente1() {
+    public Cliente() {
         initComponents();
     }
 
@@ -295,7 +295,7 @@ public class Cliente1 extends javax.swing.JFrame {
             return;
         }
 
-        Cliente1 objCliente = new Cliente1();
+        Cliente objCliente = new Cliente();
 
         ComboBoxRues cb =  (ComboBoxRues) cmbEmpresa.getSelectedItem();
 
@@ -368,7 +368,7 @@ public class Cliente1 extends javax.swing.JFrame {
         // Elimino el registro del JTable
         modelo.removeRow(indice);
 
-        Cliente1 objCliente = new Cliente1();
+        Cliente objCliente = new Cliente();
         // Elimino el registro de la tabla cliente
 
         try {

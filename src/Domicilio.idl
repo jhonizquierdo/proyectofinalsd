@@ -1,0 +1,12 @@
+module Domicilios{
+    interface Domicilio{
+    boolean insertarDomicilio(in wstring Nombre, in wstring Apellido, in  long Edad);
+    boolean actualizarDomicilio(in long id_omiciliario, in wstring nombre, in  wstring Telefono , in  long Cedula);
+    boolean eliminarDomicilio(in long id_omiciliario);
+    wstring consultarDomicilio(in long id_domiciliario);
+    
+    oneway void shoutdown();
+    };
+    
+};
+

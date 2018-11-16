@@ -3,16 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package crudmvc;
 
-
-public class CrudMvc {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-    }
+/**
+ *
+ * @author DIEGO
+ */
+public class Clientes {
     
 }

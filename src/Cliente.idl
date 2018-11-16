@@ -1,0 +1,11 @@
+module Clientes{
+    interface Cliente{
+    boolean insertarCliente(in wstring Nombre, in wstring Apellido, in  long Edad);
+    boolean actualizarCliente(in long id_cliente, in wstring Nombre, in  wstring Apellido , in  long Edad);
+    boolean eliminarCliente(in long id_cliente);
+    wstring consultarCliente(in long id_cliente);
+    
+    oneway void shoutdown();
+    };
+    
+};
