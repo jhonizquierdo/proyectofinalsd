@@ -56,9 +56,9 @@ public class Factura extends javax.swing.JFrame {
         ResultSet result = ObjFacturas.cargarFac();
         try {
             //creamos un arreglo de 3 sectores
-            Object Datos[] = new Object[5];
+            Object Datos[] = new Object[6];
             while (result.next()) {
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 6; i++) {
                     Datos[i] = result.getObject(i + 1);
                 }
                 modeloTablaFac.addRow(Datos);
@@ -220,7 +220,7 @@ public class Factura extends javax.swing.JFrame {
         });
 
         jLabel13.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
-        jLabel13.setText("Producto");
+        jLabel13.setText("Vendedor");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -421,7 +421,7 @@ public class Factura extends javax.swing.JFrame {
             return;
 
         }
-
+        
         Facturas objFacturas = new Facturas();
 
         CmbCliente cb = (CmbCliente) cmbCli.getSelectedItem();
@@ -431,20 +431,20 @@ public class Factura extends javax.swing.JFrame {
 
         int id_cliente = cb.getId();
         int id_producto = cbp.getId();
-        int id_vehiculo = cbp.getId();
-        int id_vendedor = cbp.getId();
+        String matricula = cbvh.getId();
+        int id_vendedor = cbvn.getId();
         int id_factura = Integer.parseInt(txtId.getText());
 
         String fecha = txtFecha.getText();
 //        String Telefono = txt.getText();
         //int Cedula= Integer.parseInt(txtCed.getText());
-
-        boolean resultado = objFacturas.insertarFactura(id_factura, id_cliente, id_vendedor, fecha, id_vehiculo);
+try {
+            
+       
+        boolean resultado = objFacturas.insertarFactura( id_cliente,id_producto, id_vendedor, fecha, matricula);
         if (resultado == true) {
             JOptionPane.showMessageDialog(null, "Se inserto un nuevo registro.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Error al insertar.");
-        }
+        } 
         txtFecha.setText("dd/mm /aa ");
         cmbCli.setSelectedIndex(0);
         cmbProd.setSelectedIndex(0);
@@ -453,10 +453,8 @@ public class Factura extends javax.swing.JFrame {
         txtId.requestFocus();
         modeloTablaFac.setColumnCount(0);
         modeloTablaFac.setRowCount(0);
-        {
-            
-            // *** Limpio los Campos ***
-
+         } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "Error al insertar.");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -482,21 +480,23 @@ public class Factura extends javax.swing.JFrame {
 
         int id_cliente = cb.getId();
         int id_producto = cbp.getId();
-        int id_vehiculo = cbvh.getId();
+       String matricula = cbvh.getId();
         int id_vendedor = cbvn.getId();
         int id_factura = Integer.parseInt(txtId.getText());
 
         String fecha = txtFecha.getText();
         
-        
-        boolean resultado = objFacturas.actualizarFactura(id_factura, id_cliente, id_producto, id_vendedor,fecha,id_vehiculo);
+        try {
+            
+       
+        boolean resultado = objFacturas.actualizarFactura(id_factura, id_cliente, id_producto, id_vendedor,fecha,matricula);
             if (resultado == true) {
                 JOptionPane.showMessageDialog(null, "Se actualizó el registro.");
                 cargarTabla();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar.");
-
-            }
+            }             
+        }catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "Error al actualizar. Fac");
+        }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**

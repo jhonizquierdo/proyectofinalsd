@@ -64,7 +64,7 @@ public class CmbVendedor {
             while (rs.next()) {
                 dat = new CmbVendedor();
                 dat.setId(rs.getInt("id_vendedor"));
-                dat.setNombre(rs.getString("matricula"));
+                dat.setNombre(rs.getString("Nombre"));
                 datosVendedors.add(dat);
             }
             rs.close();

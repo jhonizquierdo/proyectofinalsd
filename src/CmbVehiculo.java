@@ -16,14 +16,14 @@ import java.util.Vector;
  * @author DIEGO
  */
 public class CmbVehiculo {
-    private int id;
+    private String id;
     private String nombre;  
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -56,14 +56,14 @@ public class CmbVehiculo {
             rs = ps.executeQuery();
 
             dat = new CmbVehiculo();
-            dat.setId(0);
+            dat.setId("");
             dat.setNombre("Seleccione");
             datosCmbVehiculos.add(dat);
 
             while (rs.next()) {
                 dat = new CmbVehiculo();
-                dat.setId(rs.getInt("id_vehiculo"));
-                dat.setNombre(rs.getString("matricula"));
+                dat.setId(rs.getString("matricula"));
+                dat.setNombre(rs.getString("marca"));
                 datosCmbVehiculos.add(dat);
             }
             rs.close();
