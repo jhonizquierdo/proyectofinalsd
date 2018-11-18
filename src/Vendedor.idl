@@ -1,9 +1,9 @@
-module Clientes{
-    interface Cliente{
-    boolean insertarCliente(in wstring Nombre, in wstring Apellido, in  long Edad);
-    boolean actualizarCliente(in long id_cliente, in wstring Nombre, in  wstring Apellido , in  long Edad);
-    boolean eliminarCliente(in long id_cliente);
-    wstring consultarCliente(in long id_cliente);
+module Vendedores{
+    interface Vendedor{
+    boolean insertarVendedor(in wstring Nombre,in long Telefono, in  long Cedula, in wstring Cargo);
+    boolean actualizarVendedor(in long id_vendedor,in wstring Nombre,in long Telefono, in  long Cedula, in wstring Cargo);
+    boolean eliminarVendedor(in long id_vendedor);
+    wstring consultarVendedor(in long id_vendedor);
     
     oneway void shoutdown();
     };
