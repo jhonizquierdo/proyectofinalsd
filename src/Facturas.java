@@ -206,8 +206,8 @@ public class Facturas extends FacturasPOA {
                         + rs.getString(3) + "-"
                         + rs.getString(4) + "-"
                         + rs.getString(5) + "-"
-                        + rs.getString(6) + "-"
-                        + rs.getString(7);
+                       
+                        + rs.getString(6);
 
             }
 
@@ -215,7 +215,7 @@ public class Facturas extends FacturasPOA {
             objCone.con.close();
 
         } catch (SQLException e) {
-            System.out.println("error" + e.getMessage());
+            System.out.println("lol" + e.getMessage());
         }
         return resultado;
     }
@@ -228,13 +228,13 @@ public class Facturas extends FacturasPOA {
     public ResultSet cargarFac() {
         ResultSet resultado = null;
         try {
-            String sql = "Select id_factura,id_cliente, id_producto,id_vendedor,fecha,id_vehiculo, from factura";
+            String sql = "Select  id_factura,id_cliente, id_producto ,id_vendedor ,fecha ,vehiculo_matricula from factura";
             objCone.conectar(); // abrimos la conexion
             Statement st = objCone.con.createStatement();//encargado de la consulta
             resultado = st.executeQuery(sql);
         } catch (Exception e) {
 
-            JOptionPane.showMessageDialog(null, "Error " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al cargar " + e.getMessage());
         }
         return resultado;
     }

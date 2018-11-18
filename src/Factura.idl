@@ -1,6 +1,7 @@
 module Factura{
     interface Facturas{
     boolean insertarFactura( in long id_cliente, in  long id_producto,in  long id_vendedor,in wstring fecha,in wstring matricula );
+    
     boolean actualizarFactura(in long id_factura,in long id_cliente, in long id_producto, in  long id_vendedor,in wstring fecha , in  wstring matricula);
     boolean eliminarFactura(in long id_factura);
     wstring consultarFactura(in long id_factura);

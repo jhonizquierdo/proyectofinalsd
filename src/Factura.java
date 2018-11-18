@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Factura extends javax.swing.JFrame {
 
-  public int indice;  
+    public int indice;
     private DefaultTableModel modeloTablaFac;
 
     public Factura() {
@@ -47,6 +47,8 @@ public class Factura extends javax.swing.JFrame {
         modeloTablaFac.addColumn("Vendedor");
         modeloTablaFac.addColumn("fecha");
         modeloTablaFac.addColumn("Vehiculo");
+
+        Conexion conn = new Conexion();
     }
 
     //Metodo par cargar tabla
@@ -94,7 +96,6 @@ public class Factura extends javax.swing.JFrame {
         btnConsultar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        btnBuscar = new javax.swing.JButton();
         cmbCli = new javax.swing.JComboBox<>();
         cmbProd = new javax.swing.JComboBox<>();
         cmbVeh = new javax.swing.JComboBox<>();
@@ -201,15 +202,6 @@ public class Factura extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel12.setText("Vehiculo");
 
-        btnBuscar.setBackground(new java.awt.Color(102, 102, 0));
-        btnBuscar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
         btnActualizar.setBackground(new java.awt.Color(102, 102, 0));
         btnActualizar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnActualizar.setText("Actualizar");
@@ -251,7 +243,6 @@ public class Factura extends javax.swing.JFrame {
                     .addComponent(cmbVeh, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -260,20 +251,18 @@ public class Factura extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnActualizar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addGap(18, 18, 18)
-                        .addComponent(cmbVen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbVen, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(162, 162, 162)))
                 .addGap(0, 49, Short.MAX_VALUE))
         );
@@ -288,11 +277,9 @@ public class Factura extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -335,10 +322,14 @@ public class Factura extends javax.swing.JFrame {
 
     private void tblFacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFacMouseClicked
         // TODO add your handling code here:
+
         int seleccion = tblFac.rowAtPoint(evt.getPoint());
         txtId.setText(String.valueOf(tblFac.getValueAt(seleccion, 0)));
-        txtFecha.setText(String.valueOf(tblFac.getValueAt(seleccion, 1)));
-        //  cmbCli.addItem(item.ValueOf(tblFac.getValueAt(seleccion,2)));
+        txtFecha.setText(String.valueOf(tblFac.getValueAt(seleccion, 4)));
+       
+       
+
+
     }//GEN-LAST:event_tblFacMouseClicked
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -399,12 +390,16 @@ public class Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        try {
 
-        modeloTablaFac = (DefaultTableModel) tblFac.getModel();
-        modeloTablaFac.setColumnCount(0);
-        modeloTablaFac.setRowCount(0);
-        getColumn();
-        cargarTabla();
+            modeloTablaFac = (DefaultTableModel) tblFac.getModel();
+            modeloTablaFac.setColumnCount(0);
+            modeloTablaFac.setRowCount(0);
+            getColumn();
+            cargarTabla();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR:" + e.getMessage());
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -421,7 +416,7 @@ public class Factura extends javax.swing.JFrame {
             return;
 
         }
-        
+
         Facturas objFacturas = new Facturas();
 
         CmbCliente cb = (CmbCliente) cmbCli.getSelectedItem();
@@ -438,29 +433,24 @@ public class Factura extends javax.swing.JFrame {
         String fecha = txtFecha.getText();
 //        String Telefono = txt.getText();
         //int Cedula= Integer.parseInt(txtCed.getText());
-try {
-            
-       
-        boolean resultado = objFacturas.insertarFactura( id_cliente,id_producto, id_vendedor, fecha, matricula);
-        if (resultado == true) {
-            JOptionPane.showMessageDialog(null, "Se inserto un nuevo registro.");
-        } 
-        txtFecha.setText("dd/mm /aa ");
-        cmbCli.setSelectedIndex(0);
-        cmbProd.setSelectedIndex(0);
-        cmbVeh.setSelectedIndex(0);
-        cmbVen.setSelectedIndex(0);
-        txtId.requestFocus();
-        modeloTablaFac.setColumnCount(0);
-        modeloTablaFac.setRowCount(0);
-         } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "Error al insertar.");
+        try {
+
+            boolean resultado = objFacturas.insertarFactura(id_cliente, id_producto, id_vendedor, fecha, matricula);
+            if (resultado == true) {
+                JOptionPane.showMessageDialog(null, "Se inserto un nuevo registro.");
+            }
+            txtFecha.setText("dd/mm /aa ");
+            cmbCli.setSelectedIndex(0);
+            cmbProd.setSelectedIndex(0);
+            cmbVeh.setSelectedIndex(0);
+            cmbVen.setSelectedIndex(0);
+            txtId.requestFocus();
+            modeloTablaFac.setColumnCount(0);
+            modeloTablaFac.setRowCount(0);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al insertar.");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtFechaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaKeyTyped
         // TODO add your handling code here:
@@ -471,7 +461,7 @@ try {
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-       Facturas objFacturas = new Facturas();
+        Facturas objFacturas = new Facturas();
 
         CmbCliente cb = (CmbCliente) cmbCli.getSelectedItem();
         CmbProducto cbp = (CmbProducto) cmbProd.getSelectedItem();
@@ -480,22 +470,21 @@ try {
 
         int id_cliente = cb.getId();
         int id_producto = cbp.getId();
-       String matricula = cbvh.getId();
+        String matricula = cbvh.getId();
         int id_vendedor = cbvn.getId();
         int id_factura = Integer.parseInt(txtId.getText());
 
         String fecha = txtFecha.getText();
-        
+
         try {
-            
-       
-        boolean resultado = objFacturas.actualizarFactura(id_factura, id_cliente, id_producto, id_vendedor,fecha,matricula);
+
+            boolean resultado = objFacturas.actualizarFactura(id_factura, id_cliente, id_producto, id_vendedor, fecha, matricula);
             if (resultado == true) {
                 JOptionPane.showMessageDialog(null, "Se actualizó el registro.");
                 cargarTabla();
-            }             
-        }catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "Error al actualizar. Fac");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar. Fac");
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
@@ -536,7 +525,6 @@ try {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
