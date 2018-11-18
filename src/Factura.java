@@ -1,20 +1,73 @@
+
+import java.sql.ResultSet;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author DIEGO
  */
 public class Factura extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Factura
-     */
+    public int indice;
+    private DefaultTableModel modeloTablaFac;
+
     public Factura() {
         initComponents();
+        CmbCliente cb = new CmbCliente();
+        DefaultComboBoxModel modeloCmbCliente = new DefaultComboBoxModel(cb.mostrarClis());
+        cmbCli.setModel(modeloCmbCliente);
+
+        CmbProducto cbp = new CmbProducto();
+        DefaultComboBoxModel modeloCmbProd = new DefaultComboBoxModel(cbp.mostrarProd());
+        cmbProd.setModel(modeloCmbProd);
+
+        CmbVehiculo cbvh = new CmbVehiculo();
+        DefaultComboBoxModel modeloCmbVeh = new DefaultComboBoxModel(cbvh.mostrarVehiculos());
+        cmbVeh.setModel(modeloCmbVeh);
+
+        CmbVendedor cbvn = new CmbVendedor();
+        DefaultComboBoxModel modeloCmbVen = new DefaultComboBoxModel(cbvn.mostrarVendedors());
+        cmbVen.setModel(modeloCmbVen);
+    }
+    //Metodo para cargar las columnas en la tabla
+
+    private void getColumn() {
+        modeloTablaFac = (DefaultTableModel) tblFac.getModel();
+
+        modeloTablaFac.addColumn("ID");
+        modeloTablaFac.addColumn("Cliente");
+        modeloTablaFac.addColumn("Producto");
+        modeloTablaFac.addColumn("Vendedor");
+        modeloTablaFac.addColumn("fecha");
+        modeloTablaFac.addColumn("Vehiculo");
+    }
+
+    //Metodo par cargar tabla
+    private void cargarTabla() {
+        Facturas ObjFacturas = new Facturas();
+        modeloTablaFac = (DefaultTableModel) tblFac.getModel();
+        ResultSet result = ObjFacturas.cargarFac();
+        try {
+            //creamos un arreglo de 3 sectores
+            Object Datos[] = new Object[5];
+            while (result.next()) {
+                for (int i = 0; i < 5; i++) {
+                    Datos[i] = result.getObject(i + 1);
+                }
+                modeloTablaFac.addRow(Datos);
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
     }
 
     /**
@@ -46,6 +99,8 @@ public class Factura extends javax.swing.JFrame {
         cmbProd = new javax.swing.JComboBox<>();
         cmbVeh = new javax.swing.JComboBox<>();
         btnActualizar = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        cmbVen = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -164,6 +219,9 @@ public class Factura extends javax.swing.JFrame {
             }
         });
 
+        jLabel13.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jLabel13.setText("Producto");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,12 +237,11 @@ public class Factura extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel10)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
@@ -203,16 +260,21 @@ public class Factura extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnActualizar))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbVen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(162, 162, 162)))
                 .addGap(0, 49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -242,9 +304,13 @@ public class Factura extends javax.swing.JFrame {
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbVen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbVeh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -271,24 +337,26 @@ public class Factura extends javax.swing.JFrame {
         // TODO add your handling code here:
         int seleccion = tblFac.rowAtPoint(evt.getPoint());
         txtId.setText(String.valueOf(tblFac.getValueAt(seleccion, 0)));
-        txtNombre.setText(String.valueOf(tblFac.getValueAt(seleccion, 1)));
-        txtTel.setText(String.valueOf(tblFac.getValueAt(seleccion, 2)));
-        txtFecha.setText(String.valueOf(tblFac.getValueAt(seleccion, 3)));
+        txtFecha.setText(String.valueOf(tblFac.getValueAt(seleccion, 1)));
+        //  cmbCli.addItem(item.ValueOf(tblFac.getValueAt(seleccion,2)));
     }//GEN-LAST:event_tblFacMouseClicked
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         //LIMPIAR clientes
-        modeloTablaDom = (DefaultTableModel) tblFac.getModel();
+        modeloTablaFac = (DefaultTableModel) tblFac.getModel();
 
         // Limpio los campos
         // *** Limpio los Campos ***
         txtId.setText("0");
-        txtNombre.setText("");
-        txtTel.setText("");
-        txtFecha.setText("");
-        txtNombre.requestFocus();
-        modeloTablaDom.setColumnCount(0);
-        modeloTablaDom.setRowCount(0);
+
+        txtFecha.setText("dd/mm /aa ");
+        cmbCli.setSelectedIndex(0);
+        cmbProd.setSelectedIndex(0);
+        cmbVeh.setSelectedIndex(0);
+        cmbVen.setSelectedIndex(0);
+        txtId.requestFocus();
+        modeloTablaFac.setColumnCount(0);
+        modeloTablaFac.setRowCount(0);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -302,19 +370,18 @@ public class Factura extends javax.swing.JFrame {
         indice = tblFac.getSelectedRow();
 
         // Asigno a idCiudad el elemento a eliminar
-        int id_domiciliario = Integer.parseInt(txtId.getText());
+        int id_factura = Integer.parseInt(txtId.getText());
 
         // System.out.println(id_cliente);
-
         // Elimino el registro del JTable
         modelo.removeRow(indice);
 
-        Domicilios objDomicilios = new Domicilios();
+        Facturas objFacturas = new Facturas();
         // Elimino el registro de la tabla cliente
 
         try {
 
-            boolean resultado = objDomicilios.eliminarDomicilio(id_domiciliario);
+            boolean resultado = objFacturas.eliminarFactura(id_factura);
             // Imprimo el mensaje para indicar si se eliminó o no el registro
             if (resultado == true) {
                 JOptionPane.showMessageDialog(null, "El registro se elimino.");
@@ -333,59 +400,63 @@ public class Factura extends javax.swing.JFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
 
-        modeloTablaDom = (DefaultTableModel) tblFac.getModel();
-        modeloTablaDom.setColumnCount(0);
-        modeloTablaDom.setRowCount(0);
+        modeloTablaFac = (DefaultTableModel) tblFac.getModel();
+        modeloTablaFac.setColumnCount(0);
+        modeloTablaFac.setRowCount(0);
         getColumn();
         cargarTabla();
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        if (txtNombre.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Digite Su nombre ");
-            txtNombre.requestFocus();
+        if (txtFecha.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Digite Su fecha dd/mm/aa ");
+            txtFecha.requestFocus();
             return;
 
         }
-        if (txtTel.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Digite Su apellido ");
-            txtTel.requestFocus();
+        if (txtId.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Digite Su id ");
+            txtId.requestFocus();
             return;
 
         }
 
-        Domicilios objDomicilios = new Domicilios();
+        Facturas objFacturas = new Facturas();
 
-        int id_domiciliario = Integer.parseInt(txtId.getText());
+        CmbCliente cb = (CmbCliente) cmbCli.getSelectedItem();
+        CmbProducto cbp = (CmbProducto) cmbProd.getSelectedItem();
+        CmbVehiculo cbvh = (CmbVehiculo) cmbVeh.getSelectedItem();
+        CmbVendedor cbvn = (CmbVendedor) cmbVen.getSelectedItem();
 
-        String Nombre = txtNombre.getText();
-        String Telefono = txtTel.getText();
+        int id_cliente = cb.getId();
+        int id_producto = cbp.getId();
+        int id_vehiculo = cbp.getId();
+        int id_vendedor = cbp.getId();
+        int id_factura = Integer.parseInt(txtId.getText());
+
+        String fecha = txtFecha.getText();
+//        String Telefono = txt.getText();
         //int Cedula= Integer.parseInt(txtCed.getText());
-        String Cedula = txtFecha.getText();
-        if (id_domiciliario == 0) {
-            boolean resultado = objDomicilios.insertarDomicilio(Nombre, Telefono, Cedula );
-            if (resultado == true) {
-                JOptionPane.showMessageDialog(null, "Se inserto un nuevo registro.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al insertar.");
-            }
 
+        boolean resultado = objFacturas.insertarFactura(id_factura, id_cliente, id_vendedor, fecha, id_vehiculo);
+        if (resultado == true) {
+            JOptionPane.showMessageDialog(null, "Se inserto un nuevo registro.");
         } else {
-            boolean resultado = objDomicilios.actualizarDomicilio(id_domiciliario, Nombre, Telefono, Cedula);
-            if (resultado == true) {
-                JOptionPane.showMessageDialog(null, "Se actualizó el registro.");
-                cargarTabla();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar.");
-
-            }
+            JOptionPane.showMessageDialog(null, "Error al insertar.");
+        }
+        txtFecha.setText("dd/mm /aa ");
+        cmbCli.setSelectedIndex(0);
+        cmbProd.setSelectedIndex(0);
+        cmbVeh.setSelectedIndex(0);
+        cmbVen.setSelectedIndex(0);
+        txtId.requestFocus();
+        modeloTablaFac.setColumnCount(0);
+        modeloTablaFac.setRowCount(0);
+        {
+            
             // *** Limpio los Campos ***
-            txtId.setText("");
-            txtNombre.setText("");
-            txtTel.setText("");
-            txtFecha.setText("");
-            txtNombre.requestFocus();
+
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -402,7 +473,30 @@ public class Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
+       Facturas objFacturas = new Facturas();
+
+        CmbCliente cb = (CmbCliente) cmbCli.getSelectedItem();
+        CmbProducto cbp = (CmbProducto) cmbProd.getSelectedItem();
+        CmbVehiculo cbvh = (CmbVehiculo) cmbVeh.getSelectedItem();
+        CmbVendedor cbvn = (CmbVendedor) cmbVen.getSelectedItem();
+
+        int id_cliente = cb.getId();
+        int id_producto = cbp.getId();
+        int id_vehiculo = cbvh.getId();
+        int id_vendedor = cbvn.getId();
+        int id_factura = Integer.parseInt(txtId.getText());
+
+        String fecha = txtFecha.getText();
+        
+        
+        boolean resultado = objFacturas.actualizarFactura(id_factura, id_cliente, id_producto, id_vendedor,fecha,id_vehiculo);
+            if (resultado == true) {
+                JOptionPane.showMessageDialog(null, "Se actualizó el registro.");
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar.");
+
+            }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
@@ -451,10 +545,12 @@ public class Factura extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbCli;
     private javax.swing.JComboBox<String> cmbProd;
     private javax.swing.JComboBox<String> cmbVeh;
+    private javax.swing.JComboBox<String> cmbVen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
