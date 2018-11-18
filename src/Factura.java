@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Factura extends javax.swing.JFrame {
 
-    public int indice;
+  public int indice;  
     private DefaultTableModel modeloTablaFac;
 
     public Factura() {

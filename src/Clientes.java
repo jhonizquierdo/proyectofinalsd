@@ -1,13 +1,13 @@
 
 import java.sql.*;
-import Cliente.*;
+import Clientes.*;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author DIEGO
  */
-public class Clientes extends ClientesPOA {
+public class Clientes extends ClientePOA {
 
     Conexion objCon = new Conexion();
 

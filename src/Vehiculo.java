@@ -1,20 +1,64 @@
+
+import java.sql.ResultSet;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author DIEGO
  */
 public class Vehiculo extends javax.swing.JFrame {
 
+    public int indice;
+    private DefaultTableModel modeloTablaDom;
+
     /**
      * Creates new form Vehiculo
      */
     public Vehiculo() {
         initComponents();
+        CmbDom cbdo = new CmbDom();
+        DefaultComboBoxModel modeloCmbDom = new DefaultComboBoxModel(cbdo.mostrarDoms());
+        cmbDo.setModel(modeloCmbDom);
+
+    }
+    //Metodo para cargar las columnas en la tabla
+
+    private void getColumn() {
+        modeloTablaDom = (DefaultTableModel) tblVh.getModel();
+
+        modeloTablaDom.addColumn("MATRICULA");
+        modeloTablaDom.addColumn("DOMICILIO");
+        modeloTablaDom.addColumn("MARCA");
+
+    }
+
+    //Metodo par cargar tabla
+    private void cargarTabla() {
+        Vehiculos ObjVehiculos = new Vehiculos();
+        modeloTablaDom = (DefaultTableModel) tblVh.getModel();
+        ResultSet result = ObjVehiculos.cargarVehiculo();
+        try {
+            //creamos un arreglo de 3 sectores
+            Object Datos[] = new Object[3];
+            while (result.next()) {
+                for (int i = 0; i < 3; i++) {
+                    Datos[i] = result.getObject(i + 1);
+                }
+                modeloTablaDom.addRow(Datos);
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
     }
 
     /**
@@ -26,21 +70,365 @@ public class Vehiculo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtMarca = new javax.swing.JTextField();
+        btnConsultar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblVh = new javax.swing.JTable();
+        btnNext = new javax.swing.JButton();
+        txtMatricula = new javax.swing.JTextField();
+        cmbDo = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(153, 255, 153));
+        jLabel1.setText("Vehiculo");
+
+        jLabel3.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jLabel3.setText("Marca");
+
+        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jLabel2.setText("Matricula");
+
+        txtMarca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMarcaActionPerformed(evt);
+            }
+        });
+        txtMarca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMarcaKeyTyped(evt);
+            }
+        });
+
+        btnConsultar.setBackground(new java.awt.Color(102, 102, 0));
+        btnConsultar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        btnConsultar.setText("Consultar ");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+
+        btnGuardar.setBackground(new java.awt.Color(102, 102, 0));
+        btnGuardar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        btnGuardar.setText("Guardar ");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setBackground(new java.awt.Color(102, 102, 0));
+        btnLimpiar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setBackground(new java.awt.Color(102, 102, 0));
+        btnEliminar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        btnEliminar.setText("Eliminar ");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        tblVh.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tblVh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblVhMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblVh);
+
+        btnNext.setBackground(new java.awt.Color(102, 102, 0));
+        btnNext.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        btnNext.setText("NEXT");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
+
+        txtMatricula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMatriculaActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jLabel4.setText("Domiciliario");
+
+        btnActualizar.setBackground(new java.awt.Color(102, 102, 0));
+        btnActualizar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(129, 129, 129)
+                                            .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(18, 18, Short.MAX_VALUE)
+                                                .addComponent(cmbDo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(54, 54, 54))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(btnEliminar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel2)
+                        .addGap(7, 7, 7))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbDo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(51, 51, 51))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMarcaActionPerformed
+        // TODO add your handling code here:
+        txtMarca.transferFocus();
+    }//GEN-LAST:event_txtMarcaActionPerformed
+
+    private void txtMarcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMarcaKeyTyped
+        // TODO add your handling code here:
+
+        char validar = evt.getKeyChar();
+        if (Character.isDigit(validar)) {
+            getToolkit().beep();
+            evt.consume();
+
+            JOptionPane.showMessageDialog(rootPane, "Ingresa tu nombre ");
+        }
+    }//GEN-LAST:event_txtMarcaKeyTyped
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+
+        modeloTablaDom = (DefaultTableModel) tblVh.getModel();
+        modeloTablaDom.setColumnCount(0);
+        modeloTablaDom.setRowCount(0);
+        getColumn();
+        cargarTabla();
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+
+        if (txtMarca.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Digite Su nombre ");
+            txtMarca.requestFocus();
+            return;
+
+        }
+        if (txtMatricula.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Digite Su apellido ");
+            txtMatricula.requestFocus();
+            return;
+
+        }
+
+        Vehiculos objVehiculos = new Vehiculos();
+
+        CmbDom cbdom = (CmbDom) cmbDo.getSelectedItem();
+
+        String matricula = txtMatricula.getText();
+        String marca = txtMarca.getText();
+
+        // if (id_producto == 0) {
+        boolean resultado = objVehiculos.insertarVehiculo(matricula, HIDE_ON_CLOSE, marca);
+        if (resultado == true) {
+            JOptionPane.showMessageDialog(null, "Se inserto un nuevo registro.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al insertar.");
+        }
+
+        // } else {
+        // *** Limpio los Campos ***
+        txtMatricula.setText("");
+        txtMarca.setText("");
+
+        txtMatricula.requestFocus();
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        //LIMPIAR
+        modeloTablaDom = (DefaultTableModel) tblVh.getModel();
+
+        // Limpio los campos
+        // *** Limpio los Campos ***
+        txtMatricula.setText("0");
+        txtMarca.setText("");
+        
+
+        txtMarca.requestFocus();
+        modeloTablaDom.setColumnCount(0);
+        modeloTablaDom.setRowCount(0);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+
+        // Elimino el registro del JTable y la tabla cliente
+        // Defino el modelo para el JTable
+        DefaultTableModel modelo = (DefaultTableModel) tblVh.getModel();
+
+        // Asigno el indice del elemento seleccionado
+        indice = tblVh.getSelectedRow();
+
+        // Asigno a idCiudad el elemento a eliminar
+        int id_producto = Integer.parseInt(txtMatricula.getText());
+
+        // System.out.println(id_cliente);
+        // Elimino el registro del JTable
+        modelo.removeRow(indice);
+
+        Productos objProductos = new Productos();
+        // Elimino el registro de la tabla cliente
+
+        try {
+
+            boolean resultado = objProductos.eliminarProducto(id_producto);
+            // Imprimo el mensaje para indicar si se eliminó o no el registro
+            if (resultado == true) {
+                JOptionPane.showMessageDialog(null, "El registro se elimino.");
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR: No se elimino el registro.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR:" + e.getMessage());
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void tblVhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVhMouseClicked
+        // TODO add your handling code here:
+        int seleccion = tblVh.rowAtPoint(evt.getPoint());
+        txtMatricula.setText(String.valueOf(tblVh.getValueAt(seleccion, 0)));
+        txtMarca.setText(String.valueOf(tblVh.getValueAt(seleccion, 1)));
+        
+    }//GEN-LAST:event_tblVhMouseClicked
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void txtMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatriculaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMatriculaActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        Vehiculos objVehiculos = new Vehiculos();
+
+        CmbDom cbdom = (CmbDom) cmbDo.getSelectedItem();
+
+        String matricula = txtMatricula.getText();
+        String marca = txtMarca.getText();
+
+        boolean resultado = objVehiculos.actualizarVehiculo(matricula, HIDE_ON_CLOSE, marca);
+        if (resultado == true) {
+            JOptionPane.showMessageDialog(null, "Se actualizó el registro.");
+            cargarTabla();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al actualizar.");
+
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +466,20 @@ public class Vehiculo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnNext;
+    private javax.swing.JComboBox<String> cmbDo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblVh;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtMatricula;
     // End of variables declaration//GEN-END:variables
 }

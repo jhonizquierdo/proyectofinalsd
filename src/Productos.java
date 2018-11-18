@@ -84,7 +84,7 @@ public class Productos extends ProductosPOA {
     public String consultarProducto(int id_producto) {
         String resultado = "";
         try {
-            String sqlConsultar = "select*from producto id_producto = " + id_producto;
+            String sqlConsultar = "select*from producto  id_producto = " + id_producto;
             objCone.conectar();
             Statement st = objCone.con.createStatement();
             ResultSet rs = st.executeQuery(sqlConsultar);
